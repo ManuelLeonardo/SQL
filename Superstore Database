@@ -34,8 +34,8 @@ ORDER BY price desc;
 
 #Show a statistic about the price for items in the category of "Kitchen Supplies".
 SELECT avg(price)
-WHERE category=='Kitchen Supplies'
 FROM superstore
+WHERE category=='Kitchen Supplies'
 
 #Show the items with the least amount of stock to know which one is the best seller
 SELECT *
