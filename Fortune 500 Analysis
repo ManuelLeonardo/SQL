@@ -56,7 +56,8 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
-
+#Categorizes companies based on the average tenure of their employees into three groups: '7+ Years', '5-7 Years', and '0-5 Years'.
+It then counts the number of companies falling into each tenure group.
 SELECT
   CASE WHEN avg_employee_tenure >= 7 THEN '7+ Years'
   WHEN avg_employee_tenure >= 5 THEN '5-7 Years'
@@ -65,17 +66,20 @@ SELECT
 FROM fortune_companies
 GROUP BY tenure_group;
 
+#Aggregates the count of healthcare benefits offered by companies across different industries.
 SELECT industry, SUM(healthcare_benefits) AS count_healthcare_benefits
 FROM fortune_companies
 GROUP BY industry
 HAVING SUM(healthcare_benefits)
 ORDER BY count_healthcare_benefits DESC;
 
+#Retrieves companies offering healthcare benefits with maternity leave > 12 weeks, sorted by duration.
 SELECT company_name, maternity_leave_weeks
 FROM fortune_companies
 WHERE healthcare_benefits = 1 AND maternity_leave_weeks > 12
 ORDER BY maternity_leave_weeks DESC;
 
+#Calculates average paid time off days per industry, ordered by the highest averages.
 SELECT industry, ROUND(AVG(paid_time_off_days), 1) AS avg_paid_time_off_days
 FROM fortune_companies
 GROUP BY industry
