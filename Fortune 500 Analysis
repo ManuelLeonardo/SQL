@@ -80,7 +80,7 @@ WHERE healthcare_benefits = 1 AND maternity_leave_weeks > 12
 ORDER BY maternity_leave_weeks DESC;
 
 #Calculates average paid time off days per industry, ordered by the highest averages.
-SELECT industry, ROUND(AVG(paid_time_off_days), 1) AS avg_paid_time_off_days
+SELECT industry, ROUND(AVG(paid_time_off_days) AS avg_paid_time_off_days
 FROM fortune_companies
 GROUP BY industry
 ORDER BY paid_time_off_days DESC;
