@@ -59,7 +59,6 @@ VALUES
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
 # Here are some queries of interest to perform in this database.
-
 # Categorizes companies based on the average tenure of their employees into three groups: '7+ Years', '5-7 Years', and '0-5 Years'.
 It then counts the number of companies falling into each tenure group.
 SELECT
