@@ -61,24 +61,28 @@ VALUES
     ;
 
 # The following SQL was written to answer specific questions about the content on Netflix:
-# 1.How many movie titles are in the database (movies only, no TV shows)
+# Counts the number of movies in the Netflix database.
 SELECT COUNT(*)
 FROM "netflix_titles_info"
 WHERE type = 'Movie';
 
+# Retrieves the most recent addition date of content on Netflix.
 SELECT MAX(date(date_added))
 FROM "netflix_titles_info"
 
+# Lists all titles in alphabetical order.
 SELECT title
 FROM "netflix_titles_info"
 ORDER BY title ASC;
 
+# Finds the director(s) of 'The Starling' movie or show.
 SELECT director
 FROM "netflix_titles_info" nt
 LEFT JOIN "netflix_people" np
 ON nt.show_id = np.show_id
 WHERE nt.title = 'The Starling';
 
+# Search for the oldest movie title and year of release on Netflix.
 SELECT title, release_year
 FROM "netflix_titles_info"
 WHERE type = 'Movie'
