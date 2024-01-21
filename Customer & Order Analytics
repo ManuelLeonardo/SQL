@@ -64,20 +64,14 @@ GROUP BY product;
 #9. What was the average amount spent per account in February?
 SELECT avg(quantity*price) AS avg_spent
 FROM BIT_DB.customers c
-
-LEFT JOIN BIT_DB.FebSales Fs
-ON c.order_id = Fs.orderID
-
+LEFT JOIN BIT_DB.FebSales Fs ON c.order_id = Fs.orderID
 WHERE length(orderID) = 6
 AND orderID <> 'Order ID';
 
 #11. What was the average quantity of products purchased per account in February? 
 SELECT sum(quantity)/count(c.acctnum)
 FROM BIT_DB.customers c
-
-LEFT JOIN BIT_DB.FebSales Fs
-ON c.order_id = Fs.orderID
-
+LEFT JOIN BIT_DB.FebSales Fs ON c.order_id = Fs.orderID
 WHERE length(orderID) = 6
 AND orderID <> 'Order ID';
 
