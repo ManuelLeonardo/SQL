@@ -1,0 +1,60 @@
+#The project consists of analyzing sales data from an online music store. The queries focus on identifying potential customers, 
+analyzing sales performance by country, agent and year, and providing information on tracks sold.
+
+#1. Identify potential customers in Brazil.
+SELECT c.CustomerId, c.FirstName || ' ' || c.LastName AS Name, c.Email, c.Phone, c.Address, c.City, c.State, c.PostalCode, c.Country
+FROM chinook.invoices i
+LEFT JOIN chinook.customers c 
+ON i.customerid = c.customerid
+WHERE i.BillingCountry = 'Brazil';
+
+#2. Shows the list of countries, along with their total sales and the percentage of total sales they represent.
+SELECT BillingCountry, ROUND((SUM(Total) / (SELECT SUM(Total) FROM chinook.invoices)) * 100, 1) AS Percentage
+FROM chinook.invoices
+GROUP BY BillingCountry
+ORDER BY Total DESC;
+
+#3. Shows the invoices associated with each sales agent.
+SELECT e.LastName || ' ' || e.FirstName AS Name, i.InvoiceId,  i.InvoiceDate, i.CustomerId
+FROM chinook.invoices i
+JOIN chinook.customers c ON i.Customerid = c.Customerid
+JOIN chinook.employees e ON c.SupportRepid = e.employeeid
+GROUP BY e.employeeid;
+
+#4. Provides information on sales performance in 2009
+SELECT SUM(Total) AS TotalSales, COUNT(*) AS InvoiceCount
+FROM chinook.invoices
+WHERE InvoiceDate LIKE '2009%';
+
+--#5. This query retrieves the track name, invoice ID, invoice date, and customer ID. The result is grouped by track name and invoice ID.
+SELECT t.Name AS TrackName, i.InvoiceId, i.InvoiceDate, i.CustomerId
+FROM chinook.tracks t
+JOIN chinook.invoice_items ii ON t.TrackId = ii.TrackId
+JOIN chinook.invoices i ON ii.InvoiceId = i.InvoiceId
+GROUP BY t.Name, i.InvoiceId;
+
+#6. Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+SELECT t.Name, a.Title AS album_title, m.Name AS media_type, g.Name AS Genre
+FROM chinook.tracks t
+JOIN chinook.albums a ON t.albumid = a.albumid
+JOIN chinook.media_types m ON t.mediatypeid = m.mediatypeid
+JOIN chinook.genres g ON t.genreid = g.genreid;
+
+#7. Show the total sales made by each sales agent.
+SELECT e.FirstName || ' ' || e.LastName AS Name, ROUND(SUM(i.Total), 2) AS TotalSales
+FROM chinook.employees e
+JOIN chinook.customers c ON e.EmployeeId = c.SupportRepId
+JOIN chinook.invoices i ON c.CustomerId = i.CustomerId
+GROUP BY e.EmployeeId;
+
+#8. Which sales agent made the most dollars in sales in 2009? 
+SELECT s.FirstName || ' ' || s.LastName AS 'Name', ROUND(SUM(i.Total), 2) AS 'Total Sales'
+FROM chinook.employees s
+JOIN chinook.customers c ON s.EmployeeId = c.SupportRepId
+JOIN chinook.invoices i ON c.CustomerId = i.CustomerId
+WHERE i.InvoiceDate LIKE '%2009%'
+GROUP BY s.EmployeeId
+ORDER BY SUM(i.Total) DESC LIMIT 1;
+
+
+
