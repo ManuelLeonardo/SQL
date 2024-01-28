@@ -26,7 +26,7 @@ SELECT SUM(Total) AS TotalSales, COUNT(*) AS InvoiceCount
 FROM chinook.invoices
 WHERE InvoiceDate LIKE '2009%';
 
---#5. This query retrieves the track name, invoice ID, invoice date, and customer ID. The result is grouped by track name and invoice ID.
+#5. This query retrieves the track name, invoice ID, invoice date, and customer ID. The result is grouped by track name and invoice ID.
 SELECT t.Name AS TrackName, i.InvoiceId, i.InvoiceDate, i.CustomerId
 FROM chinook.tracks t
 JOIN chinook.invoice_items ii ON t.TrackId = ii.TrackId
